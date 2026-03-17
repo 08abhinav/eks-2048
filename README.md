@@ -195,6 +195,32 @@ We create the **aws-load-balancer-controller**, which acts as an **Ingress Contr
 
 ---
 
+## Architecture Overview
+```text
+User
+ ↓
+ALB (Public Subnets in 2 AZs)
+ ↓
+Ingress
+ ↓
+Service
+ ↓
+2048 Pod (Fargate, Private Subnet)
+
+kube-system:
+aws-load-balancer-controller pod
+
+game-2048:
+deployments
+service
+ingress
+
+EKS Control Plane:
+API Server
+Scheduler
+Controller Manager
+```
+
 ## Kubernetes Resources Used
 
 * Deployment
