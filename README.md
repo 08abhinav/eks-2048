@@ -228,3 +228,25 @@ Controller Manager
 * Ingress
 * Namespace
 * Fargate Profile
+---
+
+## NOTE
+
+Delete the infrastructure created till now to save cost. Instead of deleting each resource manually, delete the CloudFormation stacks created by eksctl.
+
+First list stacks:
+
+```bash
+aws cloudformation list-stacks --stack-status-filter CREATE_COMPLETE UPDATE_COMPLETE
+```
+
+Then delete dependent stacks (such as nodegroup stacks) first, followed by the cluster stack:
+
+```bash
+aws cloudformation delete-stack --stack-name <nodegroup-stack-name>
+aws cloudformation delete-stack --stack-name <cluster-stack-name>
+```
+
+```bash
+eksctl delete cluster --name <cluster-name> --region <region>
+```
